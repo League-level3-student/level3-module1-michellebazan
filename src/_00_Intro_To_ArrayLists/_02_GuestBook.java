@@ -23,24 +23,25 @@ public class _02_GuestBook implements ActionListener {
      * Guest #4: Donny Doners
      */
 	JFrame frame;
-	private JPanel panel;
-	private JButton one;
-	private JButton two;
-	private ArrayList<String> names = new ArrayList <String>();;
+	JPanel panel;
+	 JButton one;
+	 JButton two;
+	 ArrayList<String> names = new ArrayList <String>();;
 	
 	
-	public static void main() {
-		new _02_GuestBook().setup();
+	public static void main(String[] args) {
+		_02_GuestBook guest = new _02_GuestBook();
+		guest.setup();
 	}
 	
-	public  void setup() {
+	public void setup() {
 		frame = new JFrame("HOTEL");
-		frame.setVisible(true);
-		/*
 		panel = new JPanel();
-		frame.setSize(500, 500);
-		frame.setLocation(60, 60);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setVisible(true);
 		
 		one = new JButton();
 		one.setText("Add names");
@@ -54,9 +55,7 @@ public class _02_GuestBook implements ActionListener {
 		panel.add(two);
 		
 		frame.pack();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		*/
+		
 
 	}
 	
@@ -65,10 +64,17 @@ public class _02_GuestBook implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == one) {
-			String a = JOptionPane.showInputDialog(" enter a name");
+			String a = JOptionPane.showInputDialog("enter a name");
 			names.add(a);
 		} else if (e.getSource() == two) {
-			JOptionPane.showMessageDialog(panel, names);
+			String message = "";
+			int c = 0;
+			for(String name : names) {
+				c++;
+				message += "Guest #" + c + ": " + name + "\n"; 
+			}
+			
+			JOptionPane.showMessageDialog(panel, message);
 		}
 	}
 }
