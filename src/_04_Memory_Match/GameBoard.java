@@ -18,8 +18,8 @@ public class GameBoard extends JFrame implements ActionListener {
     static Card firstSelectedCard = null;
     static Card secondSelectedCard = null;
     
-    // 1. Initialize TOTAL_CARDS to 2;
-    static int TOTAL_CARDS = 2;
+    // 1. Initialize TOTAL_CARDS to 2; //MODIFY FOR NUM 10 --- SET EQUAL TO 52
+    static int TOTAL_CARDS = 52;
     
     ArrayList<Card> cards;
     
@@ -43,16 +43,30 @@ public class GameBoard extends JFrame implements ActionListener {
         }
         
         // 2. Initialize the ArrayList of Cards declared above
-        cards = new ArrayList <Card>(TOTAL_CARDS);
-        
+        cards = new ArrayList <Card>(); //TOTAL_CARDS
+        int count = 0;
+        int value = 2;
         // 3. Create TOTAL_CARDS number of objects each with a value of 1.
-        for(int i = 0; i < cards.size(); i++) {
-        	cards.get(i).setValue(1);
+        for(int i = 0; i < TOTAL_CARDS; i++) {
+        	if(count == 4) {
+        		count = 0;
+        		value++;
+        		//System.out.println("");
+        	}
+        	count++;
+        	Card a = new Card(value);
+        	//System.out.println(value + " value on left index ->" + i);
+        	cards.add(a);
+        	//cards.get(i).setFaceUpIcon(Card.cardImagesPath + (i + 1) + ".png");
         	//    Also, add action listeners to each Card object and then add each
-        //    of the Card objects to the ArrayList of Cards.
+        	//    of the Card objects to the ArrayList of Cards.
+        	//
         	cards.get(i).addActionListener(this);
-        }
-        
+        	}
+     // EXTRA: You can use real card faces images instead of numbers by using
+        // the images in the CardImages folder and the setFaceUpIcon() method.
+        // Example:
+      //cards.get(i).setFaceUpIcon(Card.cardImagesPath + (i + 1) + ".png");
         
         // 4. Use Collections.shuffle() method to randomize the order of
         //    the cards in the ArrayList
@@ -75,7 +89,10 @@ public class GameBoard extends JFrame implements ActionListener {
     // 9. Fill in the drawCards method to draw all the cards in the ArrayList.
     //    Run your code and verify 2 cards are displayed and the game works.
     public void drawCards() {
-    	//draw cards???
+    	
+    	for(int i = 0; i < cards.size(); i++) {
+    		cards.get(i).draw();
+    	}
     	
     }
     
@@ -83,6 +100,9 @@ public class GameBoard extends JFrame implements ActionListener {
     // There are 52 cards in a normal sized deck of cards (not counting
     // jokers). There are 4 card suits, each with the numbers 2 to 10 and
     // the Jack, Queen, King, and Ace for a total of 13.
+    /*
+     * 
+     */
     // 
     // Go back and modify the code to have a total of 52 cards and 4 copies
     // of each card, meaning x4 2s, x4 3s, x4 Jacks, ... one of each suit.
@@ -92,7 +112,7 @@ public class GameBoard extends JFrame implements ActionListener {
     // the images in the CardImages folder and the setFaceUpIcon() method.
     // Example:
     // card.setFaceUpIcon(Card.cardImagesPath + (i+1) + ".png");
-    
+    //IF YOU ARE GOING TO DO TO, JUST KNOW THE IMAGES ARE NUMBERED IN THE OPPOSITE ORDER OF THE WAY YOU DID THE VALUES IN THE FOR LOOP
     
     public void setupGui(ArrayList<Card> cards) {
         setTitle("League Memory Game");
