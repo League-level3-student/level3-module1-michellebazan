@@ -26,7 +26,7 @@ public class _00_HashMapDemo {
         /*
          * Iterating through all values with a for-each loop
          */
-        System.out.println("\nAll the vales:");
+        System.out.println("\nAll the values:");
         for(String s : studentRoster.values()){
             System.out.println(s);
         }

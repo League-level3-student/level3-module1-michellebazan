@@ -22,7 +22,13 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
-        
-        return null;
+        Schedule available = null;
+        for(int i = 0; i < 7; i++) {
+        	if(person1.getSchedule().containsKey("Monday")) {
+        		//am confused. but this is a problem for next week hahahahaha
+        		//code a method that returns all times in both schedules or represent when they are both available? maybe both
+        	}
+        }
+        return available;
     }
 }
