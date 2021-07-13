@@ -1,5 +1,8 @@
 package _06_Meeting_Scheduler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MeetingScheduler {
     /*
      * Your task is to code a method to find a meeting time for two people
@@ -22,13 +25,87 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
-        Schedule available = null;
-        for(int i = 0; i < 7; i++) {
-        	if(person1.getSchedule().containsKey("Monday")) {
-        		//am confused. but this is a problem for next week hahahahaha
-        		//code a method that returns all times in both schedules or represent when they are both available? maybe both
-        	}
+        //answer variable 
+    	Schedule available = null;
+        
+    	//hashmaps to hold when people are availvalbe
+        HashMap <String, ArrayList <Integer>> updatedOne = person1.getSchedule();
+        HashMap <String, ArrayList <Integer>> updatedTwo = person1.getSchedule();
+        
+        //creating arraylists that will hold the keys
+        ArrayList <String> namesOne = new ArrayList();
+        ArrayList <String> namesTwo = new ArrayList();
+        for (String keys : updatedOne.keySet()) 
+        	namesOne.add(keys);
+        for(String keys: updatedTwo.keySet())
+        	namesTwo.add(keys);
+        
+        //to hold the hours
+        //int[] hoursOne = new int[updatedOne.keySet().size()];
+        //int[] hoursTwo = new int[updatedTwo.keySet().size()];
+        //int index = 0;
+        //for(ArrayList<Integer> h1 : updatedOne.values()) 
+        	//hoursOne[index] = (int) h1;
+        //me checking if one has more avaible days than the other
+        //spell check does not matter here hmph
+        int max = 0;
+        if(namesOne.size() <= namesTwo.size()) {
+        	max = namesOne.size();
+        	
+        	//different for loops depending on if statement (checks ^^^^^^^)
+        	//first for loops thru the first hashmap
+        	for(int i = 0; i < max; i++) {
+        		//loops thru the second hashmap
+            	for(int c = 0; c < namesTwo.size(); c++) {
+            		//checks if dates are equal
+            		if(namesOne.get(i).equals(namesTwo.get(c))) {
+            			//if dates are equal, check if time is equal
+            			if(updatedOne.get(namesOne.get(i)) == updatedTwo.get(namesTwo.get(c))) {
+            				ArrayList <Integer> a = updatedOne.get(namesOne.get(i));
+            				Integer b = a.get(0);
+            				available.addAvailability(namesOne.get(i), b);
+            			}
+            		}
+            	}
+            }
+        	//if the 2nd hashmap has more dates than first
+        } else {
+        	max = namesTwo.size();
+        	//loops thru 2nd hashmap
+        	for(int i = 0; i < max; i++) {
+        		//loops thru the first hashmap
+            	for(int c = 0; c < namesOne.size(); c++) {
+            		//checks if dates are equal
+            		int date2 = c;
+            		while(namesTwo.get(i).equals(namesOne.get(date2))) {
+            			//if dates are equal, check if time is equal
+            			if(updatedTwo.get(namesTwo.get(i)) == updatedOne.get(namesOne.get(date2))) {
+            				ArrayList <Integer> a = updatedTwo.get(namesTwo.get(i));
+            				Integer b = a.get(0);
+            				//available.addAvailability(namesTwo.get(i), b);
+            			}
+            			date2++;
+            		}
+            	}
+            }
         }
+        //*************************************************************************
+        //FOR NEXT TIME:
+        /*
+         * this code might have worked if there was only ONE day ex/ mon 8. tues 2
+         * but the test code has it as this ex/ mon 2, mon 4, tues 3
+         * THEREFORE adapt the code so it checks all times on a matching day
+         * 
+         * basically plan more before coding. revamp current code. 
+         * ;-; pain
+         */
+        
+        //for(int i = 0; i < 7; i++) {
+        	//if(person1.getSchedule().containsKey("Monday")) {
+        		
+        		//code a method that returns all times in both schedules or represent when they are both available? maybe both
+        	//}
+        //}
         return available;
     }
 }
