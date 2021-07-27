@@ -9,7 +9,7 @@ public class _00_HashMapDemo {
          * Declare and Initializing a HashMap of id's and students
          */
         HashMap<Integer, String> studentRoster = new HashMap<Integer, String>();
-
+        	//key, value
         studentRoster.put(75869, "Danny Ditko");
         studentRoster.put(15684, "Tiana Tickles");
         studentRoster.put(87561, "Freddy Farewell");
