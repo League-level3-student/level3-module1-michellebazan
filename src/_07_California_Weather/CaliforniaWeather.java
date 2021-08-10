@@ -2,6 +2,8 @@ package _07_California_Weather;
 
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 /*
  * OBJECTIVE:
  * 1. Create a program that allows the user to search for the weather
@@ -28,18 +30,35 @@ import java.util.HashMap;
  */
 
 public class CaliforniaWeather {
-    
-    void start() {
-        HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
-        
-        // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
-        WeatherData datum = weatherData.get(cityName);
-        
-        if( datum == null ) {
-            System.out.println("Unable to find weather data for: " + cityName);
-        } else {
-            System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
-        }
-    }
+
+	void start() {
+		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+
+		// All city keys have the first letter capitalized of each word
+		// JOptionPane.showInputDialog("")
+		String ans = JOptionPane.showInputDialog(
+				"Type 'A' to search by city name, 'B' to search by weather condition or 'C' to seach with a min. and max. temp..");
+		if (ans.equals('A')) {
+			// part 1
+			String cityName = Utilities.capitalizeWords(JOptionPane.showInputDialog("Input City Name Here"));
+			WeatherData datum = weatherData.get(cityName);
+
+			if (datum == null) {
+				System.out.println("Unable to find weather data for: " + cityName);
+			} else {
+				System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of "
+						+ datum.temperatureF + " F");
+			}
+		}
+
+		if (ans.equals('B')) {
+			// part 2
+		}
+
+		if (ans.equals('C')) {
+			// part 3
+		}
+		
+		//note of importance: stick to hashmaps *******
+	}
 }

@@ -25,7 +25,7 @@ public class MeetingScheduler {
 	 */
 	public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
 		// answer variable
-		Schedule available = null;
+		Schedule available = new Schedule();
 		// key (day), value (hours)
 		// value is an arraylist, holds multiple hours
 		// 1:1
@@ -33,7 +33,20 @@ public class MeetingScheduler {
 		// hashmaps to hold when people are available
 		HashMap<String, ArrayList<Integer>> updatedOne = person1.getSchedule();
 		HashMap<String, ArrayList<Integer>> updatedTwo = person2.getSchedule();
-
+		
+		for (String day : updatedOne.keySet()) {
+			ArrayList<Integer> one = updatedOne.get(day);
+			ArrayList<Integer> two = updatedTwo.get(day);
+			
+			for(int i = 0; i < one.size(); i++) {
+				if( two.contains(one.get(i))) {
+					available.addAvailability(day, one.get(i));
+				}
+			}
+		}
+		
+		
+/*
 		// something that holds the strings of the days of the week
 		ArrayList<String> daysOfTheWeek = new ArrayList();
 		daysOfTheWeek.add("Monday");
@@ -43,44 +56,58 @@ public class MeetingScheduler {
 		daysOfTheWeek.add("Friday");
 		daysOfTheWeek.add("Saturday");
 		daysOfTheWeek.add("Sunday");
-		
+		int c = 0;
 		ArrayList<Integer> hourTwo;
 		//first for loop to go through every day of the week
 		for (int i = 0; i < daysOfTheWeek.size(); i++) {
 			//suppose to check if on that day, there are hours available.
-			if (updatedOne.get(daysOfTheWeek.get(i)).isEmpty() != true && updatedTwo.get(daysOfTheWeek.get(i)).isEmpty() != true){ // returns true if empty
+			if (updatedOne.get(daysOfTheWeek.get(i)).isEmpty() != true && updatedTwo.get(daysOfTheWeek.get(i)).isEmpty() != true){ 
+				// returns true if empty
 				//if person one's has more (or the same) hours as person two
 				if(updatedOne.get(daysOfTheWeek.get(i)).size() >= updatedTwo.get(daysOfTheWeek.get(i)).size()) {
-					hourTwo = updatedTwo.get(daysOfTheWeek.get(i));
+					
+					while(c < updatedTwo.get(daysOfTheWeek).size()) {
+					hourTwo = updatedTwo.get(daysOfTheWeek.get(c));
 
 					for(int j = 0; j < updatedOne.values().size(); j++) {
 						ArrayList <String> hr = (ArrayList<String>) updatedOne.values().toArray()[j];
 						ArrayList <String> hr2 = (ArrayList<String>) updatedTwo.values().toArray()[j]; 
 						//The toArray() method of ArrayList is used to return an array containing all the elements in ArrayList in the correct order.
 						//so it should return the hours in the correct order (?)
-							//
-							//available.addAvailability(daysOfTheWeek.get(i), hr);
-						
+						if( updatedOne.get(daysOfTheWeek.get(j)) == hourTwo ) { //if  the hour being checked is equal to the other person's hour
+							int newHour = Integer.valueOf(hr.get(i));
+							available.addAvailability(daysOfTheWeek.get(i), newHour);
+						}
+							
 					}
+					c++;
+					}
+					c = 0;
 					//if person two has more hours than person one
-				} else {
-					hourTwo = updatedOne.get(daysOfTheWeek.get(i));
+				} else { //ignore this half until figure out how to do the first half ---
+					System.out.println("else");
+					/*
+					hourOne = updatedOne.get(daysOfTheWeek.get(i));
 					for(ArrayList<Integer> hr: updatedTwo.values()) {
 						if(hourTwo.contains(hr)) {
 							
 						}
 					}
+					*/
+		/*
+					c = 0;
 				}
 				
 				
 			}
 		}
-
+*/
 		// 
 		// inside the if condition, check the hours (arraylists) maybe with a 2nd for
 		// loop. then add any available times to Schedule available.
 		// ***************************************************************************************************
-
+		//System.out.println(available);
+		
 		return available;
 	}
 }
