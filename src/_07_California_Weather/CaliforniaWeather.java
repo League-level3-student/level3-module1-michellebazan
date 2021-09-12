@@ -1,5 +1,6 @@
 package _07_California_Weather;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -32,13 +33,14 @@ import javax.swing.JOptionPane;
 public class CaliforniaWeather {
 
 	void start() {
-		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData(); 
+		//***** the hashmap is right here look up ******* 
 
 		// All city keys have the first letter capitalized of each word
 		// JOptionPane.showInputDialog("")
 		String ans = JOptionPane.showInputDialog(
 				"Type 'A' to search by city name, 'B' to search by weather condition or 'C' to seach with a min. and max. temp..");
-		if (ans.equals('A')) {
+		if (ans.equalsIgnoreCase("A")) {
 			// part 1
 			String cityName = Utilities.capitalizeWords(JOptionPane.showInputDialog("Input City Name Here"));
 			WeatherData datum = weatherData.get(cityName);
@@ -51,14 +53,43 @@ public class CaliforniaWeather {
 			}
 		}
 
-		if (ans.equals('B')) {
-			// part 2
+		if (ans.equalsIgnoreCase("B")) {
+			// part 2 - Create a way for the user to specify the weather condition and then list the cities that have those conditions.
+			String summary = Utilities.capitalizeWords(JOptionPane.showInputDialog("Input Summary Of Weather Here"));
+			int change = 0;
+			int temp = 0;
+			int check = 0;
+
+			for(WeatherData one: weatherData.values()) {
+				
+				if(one.weatherSummary.equals(summary)) {
+					
+					for(String two: weatherData.keySet()) {
+						if(change == 0) {
+							System.out.println(two);
+							check++;
+							change = temp;
+							break;
+						}
+						change--;
+					}
+					
+				} 
+				
+				change++;
+				temp = change;
+			}
+		
+			
+			if(check == 0) {
+				System.out.println("Unable to find cities that match " + summary);
+			}
+			
 		}
 
-		if (ans.equals('C')) {
+		//if (ans.equals('C')) {
 			// part 3
-		}
+		//}
 		
-		//note of importance: stick to hashmaps *******
 	}
 }
