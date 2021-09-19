@@ -121,6 +121,6 @@ public class CaliforniaWeather {
 				System.out.println("There are no cities the temperature range of " + minTemp + " and " + maxTemp);
 			}
 		}
-
+///trying to make sure this commits gignore this txt
 	}
 }
