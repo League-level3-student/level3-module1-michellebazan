@@ -33,8 +33,8 @@ import javax.swing.JOptionPane;
 public class CaliforniaWeather {
 
 	void start() {
-		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData(); 
-		//***** the hashmap is right here look up ******* 
+		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+		// ***** the hashmap is right here look up *******
 
 		// All city keys have the first letter capitalized of each word
 		// JOptionPane.showInputDialog("")
@@ -54,18 +54,19 @@ public class CaliforniaWeather {
 		}
 
 		if (ans.equalsIgnoreCase("B")) {
-			// part 2 - Create a way for the user to specify the weather condition and then list the cities that have those conditions.
+			// part 2 - Create a way for the user to specify the weather condition and then
+			// list the cities that have those conditions.
 			String summary = Utilities.capitalizeWords(JOptionPane.showInputDialog("Input Summary Of Weather Here"));
 			int change = 0;
 			int temp = 0;
 			int check = 0;
+			
+			for (WeatherData one : weatherData.values()) {
 
-			for(WeatherData one: weatherData.values()) {
-				
-				if(one.weatherSummary.equals(summary)) {
-					
-					for(String two: weatherData.keySet()) {
-						if(change == 0) {
+				if (one.weatherSummary.equals(summary)) {
+
+					for (String two : weatherData.keySet()) {
+						if (change == 0) {
 							System.out.println(two);
 							check++;
 							change = temp;
@@ -73,23 +74,53 @@ public class CaliforniaWeather {
 						}
 						change--;
 					}
-					
-				} 
-				
+
+				}
+
 				change++;
 				temp = change;
 			}
-		
-			
-			if(check == 0) {
+
+			if (check == 0) {
 				System.out.println("Unable to find cities that match " + summary);
 			}
-			
+
 		}
 
-		//if (ans.equals('C')) {
-			// part 3
-		//}
-		
+		if (ans.equalsIgnoreCase("C")) {
+			//getting the temps
+			String min = JOptionPane.showInputDialog("Input the minimun temperature here");
+			String max = JOptionPane.showInputDialog("Input the maxium temperature here");
+			//converting string to int
+			double minTemp = Double.parseDouble(min);
+			double maxTemp = Double.parseDouble(max);
+			
+			int change = 0;
+			int check = 0;
+			int temp = 0;
+			
+			for(WeatherData two : weatherData.values()) {
+				
+				if(two.temperatureF <= maxTemp && two.temperatureF >= minTemp){
+					
+					for(String three : weatherData.keySet()) {
+						if(change==0) {
+							System.out.println(three);
+							check++;
+							change=temp;
+							break;
+						}
+						change--;
+					}
+				}
+				change++;
+				temp = change;
+			}
+			
+			if(check==0) {
+				System.out.println("There are no cities the temperature range of " + minTemp + " and " + maxTemp);
+			}
+		}
+
 	}
 }
