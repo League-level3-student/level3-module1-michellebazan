@@ -6,6 +6,7 @@ package _08_World_Clocks;
 //dont ever touch runner class !!!! 
 public class WorldClocksRunner {
     public static void main(String[] args) {
-        new WorldClocks().start(); //.start was not originally there
+        new WorldClocks();
+
     }
 }

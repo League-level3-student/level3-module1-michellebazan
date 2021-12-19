@@ -3,19 +3,23 @@ package _08_World_Clocks;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.TimeZone;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
+import _07_California_Weather.Utilities;
+
 /*
- * You task is to create a java program that:
+ * Your task is to create a java program that:
  * 1. Displays the time for multiple cities around the world on one display.
  * 2. Gives the user the ability to add a city to the display. One possible
  *    way to do this is to create a HashMap of city names and their
@@ -50,32 +54,29 @@ public class WorldClocks implements ActionListener {
     String dateStr;
     String timeStr;
     
-    //my variables
-    JButton addCityButton;
-    Scanner scan;
-    
-    public void start() { //is not apart original code
-    	WorldClocks wc = new WorldClocks();
-    	//??
-    }
-    
+    //my variable
+    JButton pressMe;
     
     public WorldClocks() {
-        clockUtil = new ClockUtilities();
-
-        // The format for the city must be: city, country (all caps)
-        //city = "Chicago, US";
-        //timeZone = clockUtil.getTimeZoneFromCityName(city);
+    	clockUtil = new ClockUtilities();
+    	// The format for the city must be: city, country (all caps)
+    	
+    	//city = "Chicago, US";
+        city = JOptionPane.showInputDialog("City, Country");
+    	timeZone = clockUtil.getTimeZoneFromCityName(city);
+        Calendar c = Calendar.getInstance(timeZone);
+        System.out.println("Full date and time: " + c.getTime());
         
-        //Calendar calendar = Calendar.getInstance(timeZone);
-        //String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-        //String dayOfWeek = calendar.getDisplayName( Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-       // dateStr = dayOfWeek + " " + month + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.YEAR);
-        
-        //System.out.println(dateStr);
+        Calendar calendar = Calendar.getInstance(timeZone);
+        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        String dayOfWeek = calendar.getDisplayName( Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        dateStr = dayOfWeek + " " + month + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.YEAR);
 
+        System.out.println(dateStr);
+        
         // Sample starter program
         /*
+ Sample starter program
         frame = new JFrame();
         panel = new JPanel();
         textArea = new JTextArea();
@@ -86,7 +87,6 @@ public class WorldClocks implements ActionListener {
         panel.add(textArea);
         textArea.setText(city + "\n" + dateStr);
         */
-        scan = new Scanner(System.in);
         frame = new JFrame();
         panel = new JPanel();
         textArea = new JTextArea();
@@ -95,37 +95,30 @@ public class WorldClocks implements ActionListener {
         frame.setSize(100, 100);
         frame.add(panel);
         panel.add(textArea);
-        
-        panel.add(addCityButton);
-        
-        addCityButton.addActionListener(this); 
-        
-        
+        pressMe = new JButton();
+        panel.add(pressMe);
+        pressMe.addActionListener(this);
+        textArea.setText(city + "\n" + dateStr + "\n");      
         
         // This Timer object is set to call the actionPerformed() method every
         // 1000 milliseconds
         timer = new Timer(1000, this);
         timer.start();
+                
     }
     
-    public void addCity(boolean click) {
-    	
-    	textArea.setText(textArea + "\n" + city + "\n" + dateStr);
-    	
-    }
+    
+    
     
     @Override
     public void actionPerformed(ActionEvent arg0) {
     	
-    		//I was going somewhere with this,,,
-    		
-    		System.out.println("Input a city as \"city, country\" (all caps)");
-    		city = scan.nextLine();
-    		timeZone = clockUtil.getTimeZoneFromCityName(city);
-    		
-    		
-    		addCity(true);
-    	
+    	if(arg0.getSource() == pressMe) {
+    		city = JOptionPane.showInputDialog("City, Country");
+        	timeZone = clockUtil.getTimeZoneFromCityName(city);
+            Calendar c = Calendar.getInstance(timeZone);
+            System.out.println("Full date and time: " + c.getTime());
+    	}
     	
         Calendar c = Calendar.getInstance(timeZone);
         String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
