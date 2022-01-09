@@ -56,13 +56,27 @@ public class WorldClocks implements ActionListener {
     
     //my variable
     JButton pressMe;
-    
+    String hashcity;
+    String hashcountry;
+    HashMap <String, String> citynames;
     public WorldClocks() {
     	clockUtil = new ClockUtilities();
     	// The format for the city must be: city, country (all caps)
-    	
+    	citynames = new HashMap <>();
     	//city = "Chicago, US";
         city = JOptionPane.showInputDialog("City, Country");
+        
+        for(int i = 0; i < city.length(); i++) {
+        	if ((city.substring(i, i+2).equals(", ")) ) {
+        		hashcity = city.substring(0, i);
+        	hashcountry = city.substring(i+2);
+        	System.out.println(hashcity + " - " + hashcountry);
+        		break;
+        	} 
+	
+        }
+        
+        citynames.put(hashcity, hashcountry);
     	timeZone = clockUtil.getTimeZoneFromCityName(city);
         Calendar c = Calendar.getInstance(timeZone);
         System.out.println("Full date and time: " + c.getTime());
@@ -115,18 +129,39 @@ public class WorldClocks implements ActionListener {
     	
     	if(arg0.getSource() == pressMe) {
     		city = JOptionPane.showInputDialog("City, Country");
+    		
+    		for(int i = 0; i < city.length(); i++) {
+            	if ((city.substring(i, i+2).equals(", ")) ) {
+            		hashcity = city.substring(0, i);
+            	hashcountry = city.substring(i+2);
+            	System.out.println(hashcity + " - " + hashcountry);
+            		break;
+            	} 
+ 	
+            }
+            
+            citynames.put(hashcity, hashcountry);
+    		
         	timeZone = clockUtil.getTimeZoneFromCityName(city);
             Calendar c = Calendar.getInstance(timeZone);
             System.out.println("Full date and time: " + c.getTime());
     	}
-    	
-        Calendar c = Calendar.getInstance(timeZone);
-        String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
-        String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND) + "]";
-        timeStr = militaryTime + twelveHourTime;
+    	String info = "";
+    	for (String x : citynames.keySet()) {
+    		
+    		System.out.println(x + ", " + citynames.get(x));
+    		timeZone = clockUtil.getTimeZoneFromCityName(x + ", " + citynames.get(x));
+    		
+    		Calendar c = Calendar.getInstance(timeZone);
+    		String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
+    		String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND) + "]";
+    		timeStr = militaryTime + twelveHourTime;
         
-        System.out.println(timeStr);
-        textArea.setText(city + "\n" + dateStr + "\n" + timeStr);
+    		System.out.println(timeStr);
+        
+    		info += x + "\n" + dateStr + "\n" + timeStr + "\n";
+    	}
+    	textArea.setText(info);
         frame.pack();
     }
 }
